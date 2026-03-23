@@ -11,6 +11,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Remove Firebase references from Java files
+        run: |
+          find app/src -name "*.java" | xargs sed -i '/import com\.google\.firebase/d'
+          find app/src -name "*.java" | xargs sed -i '/FirebaseCrashlytics/d'
+          find app/src -name "*.java" | xargs sed -i '/crashlytics\./d'
       - name: Make gradlew executable
         run: chmod +x gradlew
       - name: Build Debug APK
